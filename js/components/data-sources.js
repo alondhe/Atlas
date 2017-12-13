@@ -303,34 +303,88 @@ define(['jquery', 'knockout', 'text!./data-sources.html', 'd3', 'atlascharts', '
 							var colon_index = temp.indexOf(':');
 							var message_type = temp.substring(0, colon_index);
 							var message_content = temp.substring(colon_index + 1);
+                            var message_id = parseInt(data.messages[i].attributeName) || 0;
+                            var message_status = parseInt(data.messages[i].attributeStatus);
+                            
+                            switch(message_status) {
+                                case 0:
+                                    message_status = 'Non-issue';
+                                    break;
+                                case 1:
+                                    message_status = 'Issue';
+                                    break;
+                                default:
+                                    message_status = '';
+                            }
+                            
+                            var message_comments = data.messages[i].attributeComments;
 
+                            var icon = '';
+                            if (message_type == 'ERROR') {
+                                icon = '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>';
+                            }
+                            else if (message_type == 'WARNING') {
+                                icon = '<i class="fa fa-bell-o" aria-hidden="true"></i>';
+                            }
+                            else if (message_type == 'NOTIFICATION') {
+                                icon = '<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>';
+                            }
+                            message_type = icon + '&nbsp;' + message_type;
+                            
 							// RSD - A quick hack to put commas into large numbers.
 							// Found the regexp at:
 							// https://stackoverflow.com/questions/23104663/knockoutjs-format-numbers-with-commas
 							message_content = message_content.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                            
 							table_data.push({
+                                'id': message_id,
 								'type': message_type,
-								'content': message_content
+								'content': message_content,
+                                'status': message_status,
+                                'annotation': message_comments
 							});
 						}
 
 						$('#achillesheel_table').DataTable({
+                            createdRow: function(row, data, dataIndex) {
+                                if (data['type'].indexOf('ERROR') !== -1) {
+                                    $(row).css({"background-color":"#ffdbdb"})
+                                }
+                                else if (data['type'].indexOf('WARNING') !== -1) {
+                                    $(row).css({"background-color":"#fffedb"})
+                                }
+                                else if (data['type'].indexOf('NOTIFICATION') !== -1) {
+                                    $(row).css({"background-color":"#e8f0ff"}) 
+                                }
+                            },
 							dom: 'lfrt<"row"<"col-sm-4" i ><"col-sm-4" T ><"col-sm-4" p >>',
 							tableTools: {
 								"sSwfPath": "js/components/datasources/swf/copy_csv_xls_pdf.swf"
 							},
 							data: table_data,
-							columns: [
+                            columns: [
 								{
+                                    data: 'id',
+                                    visible: true
+                                },
+                                {
 									data: 'type',
 									visible: true,
 									width: 200
-                },
+                                },
 								{
 									data: 'content',
 									visible: true
-                }
-              ],
+                                },
+                                {
+                                    data: 'status',
+                                    visible: true
+                                },
+                                {
+                                    data: 'annotation',
+                                    visible: true
+                                }
+                            ],
 							pageLength: 15,
 							lengthChange: false,
 							deferRender: true,

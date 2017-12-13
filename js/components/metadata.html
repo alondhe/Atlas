@@ -1,0 +1,128 @@
+<div class="wrapperTitle">
+    <i class="fa fa-tags"></i> Metadata Viewer
+</div>
+<div class="heading">
+    <div class="paddedWrapper">
+        <p>
+            <b>Metadata Viewer</b> allows for consumption of all available metadata per CDM database. Metadata can be generated computationally (e.g. Achilles), or human-authored. Metadata is useful in providing context about a data source's origin, ETL design choices, and notable events.
+        </p>
+        <p>
+            Select a CDM source and then a type of metadata to view the available metadata records. Approved users may insert annotations using the "Insert New Annotation" button.
+        </p>
+    </div>
+</div>
+<div class="reportControls pad-5">
+	<div class="row">
+		<div class="col-xs-12">
+			<select class="form-control" data-bind="css : { invalid: $component.currentSource()==undefined }, options:$component.sources, optionsText:'sourceName', value:$component.currentSource, optionsCaption:'Select a Source'"></select>
+		</div>
+	</div>
+    <div class="row">
+		<div class="col-xs-12">
+			<select class="form-control" data-bind="css : { invalid: $component.currentType()==undefined }, options:$component.metadataTypes, optionsCaption:'Select a Metadata Type', optionsText:'name', value:$component.currentType"></select>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<div class="paddedWrapper">
+    <div class="btn btn-sm btn-primary" data-bind="click: $component.viewDataSource" style="">
+        <i class="fa fa-database"></i>&nbsp;View Data Source
+    </div>
+    <div class="btn btn-sm btn-primary" data-bind="click: $component.insertNewAnnotation" style="">
+        <i class="fa fa-plus"></i>&nbsp;Insert New Annotation
+    </div>
+</div>
+
+<div class="paddedWrapper">
+    <faceted-datatable data-bind="visible:loading()==false" params="orderColumn: 3, reference:reference, columns: columns, rowClick:rowClick">
+    </faceted-datatable>
+    
+    <div data-bind="visible:loading()" class="loading">loading</div>
+</div>
+
+<div role="tabpanel" data-bind="visible:$component.selectedReport() != 'none'" class="tab-pane">
+    <hr>
+    <div class="paddedWrapper" style="width: 70%">
+        <!-- ko if: $component.selectedItem() -->
+        <div class="heading"><b>Edit Annotation #
+            <span data-bind="text:$component.selectedItem().metadata_id" />:&nbsp;
+            <span data-bind="text:$component.selectedItem().metadata_name" /></b>
+        </div>
+        <!-- /ko -->
+        
+        <!-- ko ifnot: $component.selectedItem() -->
+        <div class="heading"><b>Insert New Annotation</b></div>
+        <!-- /ko -->
+        <br/>
+        
+        <ul>
+            <li><b>Concept Id</b></li>
+            <!-- ko if: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="textInput:$component.selectedItem().metadata_concept_id, value:$component.conceptId" /></div>
+            <!-- /ko -->
+            <!-- ko ifnot: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="value:$component.conceptId"/></div>
+            <!-- /ko -->
+            <br/>
+
+            <li><b>Metadata Name</b></li>
+            <!-- ko if: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="textInput:$component.selectedItem().metadata_name, value:$component.conceptName" /></div>
+            <!-- /ko -->
+            <!-- ko ifnot: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="value:$component.conceptName" /></div>
+            <!-- /ko -->
+            <br/>
+
+            <li><b>Value As String</b></li>
+            <!-- ko if: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="textInput:$component.selectedItem().value_as_string, value:$component.valueAsString" /></div>
+            <!-- /ko -->
+            <!-- ko ifnot: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="value:$component.valueAsString" /></div>
+            <!-- /ko -->
+            <br/>
+
+            <li><b>Value As Concept Id</b></li>
+            <!-- ko if: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="textInput:$component.selectedItem().value_as_concept_id, value:$component.valueAsConceptId" /></div>
+            <!-- /ko -->
+            <!-- ko ifnot: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="value:$component.valueAsConceptId" /></div>
+            <!-- /ko -->
+            <br/>
+
+            <li><b>Value As Value</b></li>
+            <!-- ko if: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="textInput:$component.selectedItem().value_as_value, value:$component.valueAsValue" /></div>
+            <!-- /ko -->
+            <!-- ko ifnot: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="value:$component.valueAsValue" /></div>
+            <!-- /ko -->
+            <br/>
+
+            <li><b>Event Date</b></li>
+            <!-- ko if: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="textInput:$component.selectedItem().metadata_date, value:$component.eventDate" /></div>
+            <!-- /ko -->
+            <!-- ko ifnot: $component.selectedItem() -->
+            <div class="asset-heading"><input type="text" data-bind="value:$component.eventDate" /></div>
+            <!-- /ko -->
+            <br/>
+            <br/>
+            
+        </ul>
+        
+        <br/><br/><br/>
+        <div class="btn btn-sm btn-primary" data-bind="click: $component.submitAnnotation" style="">
+            <i class="fa fa-edit"></i>&nbsp;Submit
+        </div>        
+        <div class="btn btn-sm btn-primary" data-bind="click: $component.clearFields" style="">
+            <i class="fa fa-close"></i>&nbsp;Cancel
+        </div>     
+    </div>
+</div>
+
+
+

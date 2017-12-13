@@ -46,6 +46,9 @@ define(['jquery', 'knockout', 'ohdsi.util', 'appConfig', 'webapi/AuthAPI', 'atla
 					case 'plp-manager':
 						pageTitle = pageTitle + ": PLP";
 						break;
+                    case 'metadata':
+                        pageTitle = pageTitle + ": Metadata";
+                        break;
 				}
 
 				if (self.hasUnsavedChanges()) {
@@ -137,6 +140,23 @@ define(['jquery', 'knockout', 'ohdsi.util', 'appConfig', 'webapi/AuthAPI', 'atla
 								self.currentView('ohdsi-configuration');
 							});
 						},
+                        '/metadata': function () {
+                            require(['metadata'], function () {
+                                self.componentParams = {
+								    model: self
+								};
+                                self.currentView('metadata');
+							});    
+                        },
+                        '/metadata/:sourceKey': function () {
+                            require(['metadata'], function () {
+								self.componentParams = {
+									model: self,
+									sourceKey: sourceKey
+								};
+                                self.currentView('metadata');
+							});    
+                        },
 						'/roles': function () {
 							require(['roles'], function () {
 								self.currentView('roles');

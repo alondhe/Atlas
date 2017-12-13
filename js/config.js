@@ -6,7 +6,7 @@ define(['optional!config-local'], function (localConfig) {
 
 	// default configuration
 	config.api = {
-		name: 'Local',
+		name: 'EpiBeta',
 		url: 'http://localhost:8080/WebAPI/'
 	};
 	config.cohortComparisonResultsEnabled = false;

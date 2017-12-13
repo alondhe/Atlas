@@ -114,6 +114,7 @@ define(['knockout', 'text!./cohort-definition-manager.html',
 		self.exportTabMode = ko.observable('printfriendly');
 		self.exportSqlMode = ko.observable('mssql');
 		self.conceptSetTabMode = self.model.currentConceptSetMode;
+        self.diagnosticTabMode = ko.observable('diagnostics');
 		self.dirtyFlag = self.model.currentCohortDefinitionDirtyFlag;
 		self.isLoadingSql = ko.observable(false);
 		self.isSaveable = ko.pureComputed(function () {

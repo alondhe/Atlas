@@ -31,6 +31,10 @@
       <li role="presentation" data-bind="css: { active: $component.tabMode() == 'conceptsets' }, click: function() { $component.tabMode('conceptsets'); }">
         <a>Concept Sets</a>
       </li>
+        
+      <li role="presentation" data-bind="css: { active: $component.tabMode() == 'diagnostics' }, click: function() { $component.tabMode('diagnostics'); }">
+        <a>Diagnostics</a>
+      </li>
 
       <li role="presentation" data-bind="css: { active: $component.tabMode() == 'generation' }, click: function() { $component.tabMode('generation'); }">
         <a>Generation</a>
@@ -130,6 +134,10 @@
         </div>
         <!-- /ko -->
       </div>
+        
+        <div role="tabpanel" data-bind="css: { active: $component.tabMode() == 'diagnostics' }" class="tab-pane">
+            
+        </div>
       <div role="tabpanel" data-bind="css: { active: $component.tabMode() == 'export' }" class="tab-pane">
         <ul class="nav nav-pills">
           <li role="presentation" data-bind="css: { active: $component.exportTabMode() == 'printfriendly' }, click: function() { $component.exportTabMode('printfriendly'); }">

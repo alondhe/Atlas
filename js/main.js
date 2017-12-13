@@ -141,6 +141,8 @@ requirejs.config({
 		"plp-spec-editor": "components/plp-spec-editor",
 		"plp-r-code": "components/plp-r-code",
 		"plp-print-friendly": "components/plp-print-friendly",
+        "metadata": "components/metadata",
+        "annotation": "components/annotation",
 
 		"d3": "https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.0/d3.min",
 		"d3-collection": "https://cdnjs.cloudflare.com/ajax/libs/d3-collection/1.0.4/d3-collection.min",
